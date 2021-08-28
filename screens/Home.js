@@ -34,7 +34,7 @@ export default class Home extends React.Component {
                         return(
                         <Pressable style={[styles.button, {backgroundColor: item.background, }]} onPress={() => {this.props.navigation.navigate(item.key)}}>
                             <Icon name={item.icon} containerStyle={styles.icon} size={55}/>
-                            <Text style={{color: 'white', textAlign: 'center', marginBottom: 10, fontWeight: 'bold', }}>{item.title}</Text>
+                            <Text style={{color: 'white', textAlign: 'center', marginBottom: 10, fontFamily: 'Poppins_700Bold'}}>{item.title}</Text>
                         </Pressable>
                         )
                     }}
