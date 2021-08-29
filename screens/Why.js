@@ -18,7 +18,7 @@ export default class Why extends React.Component {
             }}>
                 <StatusBar hidden={true} />
                 <Text> Why </Text>
-                <BottomBar navigation={this.props.navigation} color={'limegreen'}/>
+                {/* <BottomBar navigation={this.props.navigation} color={'limegreen'}/> */}
             </View>
         )
     }
