@@ -18,7 +18,7 @@ export default class Where extends React.Component {
             }}>
                 <StatusBar hidden={true} />
                 <Text> Where </Text>
-                {/* <BottomBar navigation={this.props.navigation} color={'mediumturquoise'}/> */}
+                {/* <BottomBar navigation={this.props.navigation} color={'#2DD9D9'}/> */}
             </View>
         )
     }

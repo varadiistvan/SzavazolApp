@@ -18,7 +18,7 @@ export default class Quiz extends React.Component {
             }}>
                 <StatusBar hidden={true} />
                 <Text> Quiz </Text>
-                {/* <BottomBar navigation={this.props.navigation} color={'blue'}/> */}
+                {/* <BottomBar navigation={this.props.navigation} color={'#0088CC'}/> */}
             </View>
         )
     }

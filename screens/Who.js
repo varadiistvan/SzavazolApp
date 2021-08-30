@@ -35,7 +35,7 @@ export default class Who extends React.Component {
                     </Pressable>
                     
                 </View>
-                <BottomBar navigation={this.props.navigation} color={'red'}/>
+                {/* <BottomBar navigation={this.props.navigation} color={'#FF0210'}/> */}
             </SafeAreaView>
         )
     }

@@ -79,7 +79,7 @@ export default class Egyéni extends React.Component {
 
                 </FlatList>
 
-                {/* <BottomBar navigation={this.props.navigation} color='red' /> */}
+                {/* <BottomBar navigation={this.props.navigation} color='#FF0210' /> */}
 
             </SafeAreaView>
         )

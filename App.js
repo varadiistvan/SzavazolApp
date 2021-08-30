@@ -61,7 +61,7 @@ export default function App() {
           <StatusBar hidden={true} />
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" options={{title: ""}} component={Home}/>
-            <Stack.Screen name="Compass" options={{title: "Yeet"}} component={Compass}/>
+            <Stack.Screen name="Compass" options={{title: ""}} component={Compass}/>
             <Stack.Screen name="How" options={{title: ""}} component={How}/>
             <Stack.Screen name="Quiz" options={{title: ""}} component={Quiz}/>
             <Stack.Screen name="Where" options={{title: ""}} component={Where}/>

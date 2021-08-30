@@ -19,7 +19,7 @@ export default class Program extends React.Component {
             }}>
                 <StatusBar hidden={true} />
                 <Text> Program </Text>
-                {/* <BottomBar navigation={this.props.navigation} color={'orange'}/> */}
+                {/* <BottomBar navigation={this.props.navigation} color={'#FF0210'}/> */}
             </SafeAreaView>
         )
     }

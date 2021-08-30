@@ -18,7 +18,7 @@ export default class How extends React.Component {
             }}>
                 <StatusBar hidden={true} />
                 <Text> How </Text>
-                {/* <BottomBar navigation={this.props.navigation} color={'mediumorchid'}/> */}
+                {/* <BottomBar navigation={this.props.navigation} color={'#BA3692'}/> */}
             </View>
         )
     }
