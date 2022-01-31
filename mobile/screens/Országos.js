@@ -12,11 +12,11 @@ export default class Országos extends React.Component {
     constructor(props) {
         super(props)
         const items = [
-            {key: 0, logó: require('./assets/Pártok/megnevezetlen.jpg'), név: 'Megnevezetlen'},
-            {key: 1, logó: require('./assets/Pártok/megnevezetlen.jpg'), név: 'Más párt, csak ugyanaz a logó'}
+            {logó: require('./assets/Pártok/megnevezetlen.jpg'), név: 'Megnevezetlen'},
+            {logó: require('./assets/Pártok/megnevezetlen.jpg'), név: 'Más párt, csak ugyanaz a logó'}
         ]
         for(var i = 2; i < 10; i++) {
-            items.push({key: i, logó: require('./assets/Pártok/megnevezetlen.jpg'), név: `Párt ${i+1}`})
+            items.push({logó: require('./assets/Pártok/megnevezetlen.jpg'), név: `Párt ${i+1}`})
         }
         this.state = {items: items}
     }
@@ -54,7 +54,7 @@ export default class Országos extends React.Component {
                             </View>
                         )
                     }}
-                    keyExtractor = {item => item.key.toString()}
+                    keyExtractor = {item => item.név}
                     />
                 </View>
                 
