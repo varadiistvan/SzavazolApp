@@ -8,30 +8,25 @@ import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-font
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements'
 
-import Home from './screens/Home';
-import Compass from './screens/Compass';
-import How from './screens/How';
-import Quiz from './screens/Quiz';
-import Where from './screens/Where';
-import Who from './screens/Who';
-import Why from './screens/Why';
-import Egyéni from './screens/Egyéni';
-import Országos from './screens/Országos';
-import Program from './screens/Program';
+import { Home } from './screens/Home';
+import { Compass } from './screens/Compass';
+import { How } from './screens/How';
+import { Quiz } from './screens/Quiz';
+import { Where } from './screens/Where';
+import { Who } from './screens/Who';
+import { Why } from './screens/Why';
+import { Egyéni } from './screens/components/Egyéni';
+import { Országos } from './screens/components/Országos';
+import { Program } from './screens/Program';
 
 
 const Stack = createStackNavigator()
 
-var ready = true
+let ready = true
 
 // AsyncStorage.setItem("theme", "light")
 
 // AsyncStorage.getAllKeys().then(ree => {console.log(ree.includes("theme"));ree.includes("theme")? AsyncStorage.getItem("theme").then(re => global.theme = re) : global.theme = Appearance.getColorScheme()}).then(ready = true)
-
-global.theme = "light"
-
-
-
 
 const customTextProps = {
   style:{
@@ -45,7 +40,7 @@ DarkTheme.colors.background = "#121212"
 DarkTheme.colors.card = "#303030"
 
 
-export default function App() {
+const App = () => {
 
   const [fontsloaded] = useFonts({
     Poppins_400Regular,
@@ -57,7 +52,7 @@ export default function App() {
   }
   else{ 
     return (
-      <NavigationContainer theme={global.theme == "light"? DefaultTheme :DarkTheme}>
+      <NavigationContainer theme={DefaultTheme}>
           <StatusBar hidden={true} />
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" options={{title: ""}} component={Home}/>
@@ -75,3 +70,5 @@ export default function App() {
     );
   }
 }
+
+export default App
