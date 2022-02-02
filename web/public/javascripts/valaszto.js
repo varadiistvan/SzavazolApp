@@ -3,20 +3,105 @@ let currentKerulet = null
 let editing = []
 
 function redraw () {
-    let kerInfo = document.createElement("div")
+    const kerInfo = document.createElement("div")
     kerInfo.id = "kerInfo" + currentKerulet
-    let addbtn = document.createElement("button")
+    const addbtn = document.createElement("button")
     addbtn.innerHTML = "Jelölt hozzáadása"
+    addbtn.id = "addbtn" + currentKerulet
+    addbtn.addEventListener("click", () => {addJelolt(currentKerulet)})
+
+    const newJelolt = document.createElement("div")
+    newJelolt.id = "newJelolt" + currentKerulet
+
+    const idinput = document.createElement("input")
+    idinput.id = "idinput" + currentKerulet
+    const idsign = document.createElement("span")
+    idsign.id = "idsign" + currentKerulet
+    idsign.innerHTML = "ID: "
+    newJelolt.appendChild(idsign)
+    newJelolt.appendChild(idinput)
+
+    const nevinput = document.createElement("input")
+    nevinput.id = "nevinput" + currentKerulet
+    const nevsign = document.createElement("span")
+    nevsign.id = "nevsign" + currentKerulet
+    nevsign.innerHTML = "Név: "
+    newJelolt.appendChild(nevsign)
+    newJelolt.appendChild(nevinput)
+
+    const partinput = document.createElement("input")
+    partinput.id = "partinput" + currentKerulet
+    const partsign = document.createElement("span")
+    partsign.id = "partsign" + currentKerulet
+    partsign.innerHTML = "Párt: "
+    newJelolt.appendChild(partsign)
+    newJelolt.appendChild(partinput)
+
+    const kepinput = document.createElement("input")
+    kepinput.id = "kepinput" + currentKerulet
+    const kepsign = document.createElement("span")
+    kepsign.id = "kepsign" + currentKerulet
+    kepsign.innerHTML = "Kép fájlneve: "
+    newJelolt.appendChild(kepsign)
+    newJelolt.appendChild(kepinput)
+
+    const programinput = document.createElement("input")
+    programinput.id = "programinput" + currentKerulet
+    programinput.size = 50
+    const programsign = document.createElement("span")
+    programsign.id = "programsign" + currentKerulet
+    programsign.innerHTML = "Program: "    
+    jeloltDiv.appendChild(programsign)
+    jeloltDiv.appendChild(programinput)
+
+    const finalAddBtn = document.createElement("button")
+    finalAddBtn.innerHTML = "Hozzáadás"
+    finalAddBtn.id = "finalAddBtn" + currentKerulet
+    finalAddBtn.addEventListener("click", () => {finalAddJelolt(currentKerulet)})
+    kerInfo.appendChild(finalAddBtn)
+
+    const cancelbtn = document.createElement("button")
+    cancelbtn.innerHTML = "Hozzáadás"
+    cancelbtn.id = "cancelbtn" + currentKerulet
+    cancelbtn.addEventListener("click", () => {
+        newJelolt.classList.add("hidden")
+        addbtn.classList.remove("hidden")
+        editing = editing.filter((value, index, arr) =>{
+            value != "_"
+        })
+    })
+    kerInfo.appendChild(cancelbtn)
+
+    newJelolt.classList.add("hidden")
+
     kerInfo.appendChild(addbtn)
+    kerInfo.appendChild(newJelolt)
+
     if(currentKerulet){
         drawJeloltek(kerInfo)
     }
 }
 
+function addJelolt(kerulet) {
+    editing.push("_")
+    document.getElementById("addbtn" + kerulet).classList.add("hidden")
+    document.getElementById("newJelolt" + kerulet).classList.remove("hidden")
+}
+
+function finalAddJelolt(kerulet){
+    const id = document
+}
+
 function removeJelolt(ids) {
     const idstr = ids[0] + "_" + ids[1]
     if(confirm("Biztosan eltávolítod a " + document.getElementById("jeloltNev" + idstr).textContent + " nevű jelöltet?")){
-        console.log(idstr)
+        let jeloltek = keruletek[ids[0]]["jeloltek"]
+        jeloltek = jeloltek.filter((value, index, arr) => {
+            return value.id != ids[1]
+        })
+        console.log(jeloltek)
+        keruletek[ids[0]]["jeloltek"] = jeloltek
+        document.getElementById("kerInfo" + ids[0]).removeChild(document.getElementById("jeloltDiv" + idstr))
     }
 } 
 
