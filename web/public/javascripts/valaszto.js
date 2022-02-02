@@ -70,6 +70,11 @@ function redraw () {
     })
     newJelolt.appendChild(cancelbtn)
 
+    const delKerBtn = document.createElement("button")
+    delKerBtn.innerHTML = "Választókerület törlése"
+    delKerBtn.id = "delKerBtn" + currentKerulet
+    delKerBtn.addEventListener("click", () => {delKer(currentKerulet)})
+
     newJelolt.classList.add("hidden")
 
     kerInfo.appendChild(addbtn)
@@ -77,6 +82,16 @@ function redraw () {
 
     if(currentKerulet){
         drawJeloltek(kerInfo)
+    }
+    
+    kerInfo.appendChild(delKerBtn)
+}
+
+function delKer(kerulet) {
+    if(confirm("Biztosan törlöd a(z) '" + keruletek[kerulet].keruletNev + "' nevű választókerületet?")){
+        delete keruletek[kerulet]
+        console.log(keruletek)
+        document.getElementById("eddigiKeruletek").removeChild(document.getElementById("ker" + kerulet))
     }
 }
 
@@ -98,6 +113,9 @@ function finalAddJelolt(kerulet){
     else if([id, nev, part, kep, program].includes("")){
         alert("Nem hagyhatsz üres mezőt! >:(")
     }
+    else if(keruletek[kerulet]["jeloltek"].some((e) => e.id == id)){
+        alert("Már létezik ilyen ID-vel jelölt!")
+    }
     else{
         const jelolt = {id,nev,part,kep,program}
         keruletek[kerulet]["jeloltek"].push(jelolt)
@@ -113,7 +131,6 @@ function removeJelolt(ids) {
     if(confirm("Biztosan eltávolítod a " + document.getElementById("jeloltNev" + idstr).textContent + " nevű jelöltet?")){
         let jeloltek = keruletek[ids[0]]["jeloltek"]
         jeloltek = jeloltek.filter((value) => value.id != ids[1])
-        console.log(jeloltek)
         keruletek[ids[0]]["jeloltek"] = jeloltek
         document.getElementById("kerInfo" + ids[0]).removeChild(document.getElementById("jeloltDiv" + idstr))
     }
@@ -170,8 +187,6 @@ function cancelEdit (idstr){
         item.classList.remove("hidden")
     }
 }
-
-
 
 function drawJeloltek(kerInfo) {
     for (let jelolt of keruletek[currentKerulet].jeloltek) {
@@ -291,7 +306,6 @@ function removeNext(node){
 }
 
 function clickKer (key, current) {
-    console.log(editing)
     if(editing.length != 0){
         alert("Előbb fejezd be a jelenlegi szerkesztéseket!")
     }
@@ -312,7 +326,54 @@ function removeChilds (parent) {
     }
 };
 
+function cancelNewKer(){
+    document.getElementById("addkerbtn").classList.remove("hidden")
+    document.getElementById("newKer").classList.add("hidden")
+}
+
+function finalAddKer(){
+    const id = document.getElementById("newKerIDInput").value
+    const nev = document.getElementById("newKerNevInput").value
+
+    if(id.includes("_")){
+        alert("Az id nem tartalmazhat '_' karaktert! :(")
+    }
+    else if([id, nev].includes("")){
+        alert("Nem hagyhatsz üres mezőt! >:(")
+    }
+    else if(keruletek[id] != undefined){
+        alert("Már létezik ilyen ID-vel választókerület!")
+    }
+    else{
+        keruletek[id] = {keruletNev: nev, jeloltek: []}
+
+        const kerulet = document.createElement("h3")
+        kerulet.innerHTML =  nev
+        kerulet.id = "keruletNev"+id
+        kerulet.addEventListener("click", ()=>clickKer(id,false))
+        const kerdiv = document.createElement("div")
+        kerdiv.id = "ker" + id
+        kerdiv.classList.add("kerdiv")
+        kerdiv.appendChild(kerulet)
+        document.getElementById("eddigiKeruletek").appendChild(kerdiv)
+
+        cancelNewKer()
+    }
+}
+
 function clicksSetup () {
+    const addkerbtn = document.getElementById("addkerbtn")
+    addkerbtn.addEventListener("click", ()=>{
+        addkerbtn.classList.add("hidden")
+        document.getElementById("newKer").classList.remove("hidden")
+    })
+
+    document.getElementById("finalAddKerBtn").addEventListener("click", ()=>{finalAddKer()})
+    document.getElementById("cancelNewKerBtn").addEventListener("click", ()=>{cancelNewKer()})
+    document.getElementById("backbtn").addEventListener("click", ()=>{
+        window.location.href = window.location.origin 
+    })
+
     removeChilds(document.getElementById("eddigiKeruletek"))
     for(let key in keruletek){
         const kerulet = document.createElement("h3")

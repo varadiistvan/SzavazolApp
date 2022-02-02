@@ -8,9 +8,18 @@
     <link rel="stylesheet" href="./stylesheets/valasztoStyles.css">
 </head>
 <body>
+    <button id="backbtn">Vissza a főmenübe</button>
     <h1>Választókerületek</h1>
     <div id="keruletdiv">
         <button id="addkerbtn">Választókerület hozzáadása</button>
+        <div id="newKer" class="hidden">
+            <span>Választókerület neve:</span>
+            <input type="text" id="newKerNevInput">
+            <span>Választókerület ID-ja:</span>
+            <input type="text" id="newKerIDInput">
+            <button id="finalAddKerBtn">Hozzáadás</button>
+            <button id="cancelNewKerBtn">Mégse</button>
+        </div>
         <div id="eddigiKeruletek"></div>
     </div>
 </body>
