@@ -51,26 +51,24 @@ function redraw () {
     const programsign = document.createElement("span")
     programsign.id = "programsign" + currentKerulet
     programsign.innerHTML = "Program: "    
-    jeloltDiv.appendChild(programsign)
-    jeloltDiv.appendChild(programinput)
+    newJelolt.appendChild(programsign)
+    newJelolt.appendChild(programinput)
 
     const finalAddBtn = document.createElement("button")
     finalAddBtn.innerHTML = "Hozzáadás"
     finalAddBtn.id = "finalAddBtn" + currentKerulet
     finalAddBtn.addEventListener("click", () => {finalAddJelolt(currentKerulet)})
-    kerInfo.appendChild(finalAddBtn)
+    newJelolt.appendChild(finalAddBtn)
 
     const cancelbtn = document.createElement("button")
-    cancelbtn.innerHTML = "Hozzáadás"
+    cancelbtn.innerHTML = "Mégse"
     cancelbtn.id = "cancelbtn" + currentKerulet
     cancelbtn.addEventListener("click", () => {
         newJelolt.classList.add("hidden")
         addbtn.classList.remove("hidden")
-        editing = editing.filter((value, index, arr) =>{
-            value != "_"
-        })
+        editing = editing.filter((value) => value != "_")
     })
-    kerInfo.appendChild(cancelbtn)
+    newJelolt.appendChild(cancelbtn)
 
     newJelolt.classList.add("hidden")
 
@@ -89,16 +87,32 @@ function addJelolt(kerulet) {
 }
 
 function finalAddJelolt(kerulet){
-    const id = document
+    const id = document.getElementById("idinput" + kerulet).value.trim()
+    const nev  = document.getElementById("nevinput" + kerulet).value.trim()
+    const part = document.getElementById("partinput" + kerulet).value.trim()
+    const kep = document.getElementById("kepinput" + kerulet).value.trim()
+    const program = document.getElementById("programinput" + kerulet).value.trim()
+    if(id.includes("_")){
+        alert("Az id nem tartalmazhat '_' karaktert! :(")
+    }
+    else if([id, nev, part, kep, program].includes("")){
+        alert("Nem hagyhatsz üres mezőt! >:(")
+    }
+    else{
+        const jelolt = {id,nev,part,kep,program}
+        keruletek[kerulet]["jeloltek"].push(jelolt)
+        drawJelolt(jelolt,[kerulet,id], document.getElementById("kerInfo" + kerulet))
+        document.getElementById("newJelolt" + kerulet).classList.add("hidden")
+        document.getElementById("addbtn" + kerulet).classList.remove("hidden")
+        editing = editing.filter((value) => value != "_")
+    }
 }
 
 function removeJelolt(ids) {
     const idstr = ids[0] + "_" + ids[1]
     if(confirm("Biztosan eltávolítod a " + document.getElementById("jeloltNev" + idstr).textContent + " nevű jelöltet?")){
         let jeloltek = keruletek[ids[0]]["jeloltek"]
-        jeloltek = jeloltek.filter((value, index, arr) => {
-            return value.id != ids[1]
-        })
+        jeloltek = jeloltek.filter((value) => value.id != ids[1])
         console.log(jeloltek)
         keruletek[ids[0]]["jeloltek"] = jeloltek
         document.getElementById("kerInfo" + ids[0]).removeChild(document.getElementById("jeloltDiv" + idstr))
@@ -144,9 +158,8 @@ function saveEdit(ids){
 }
 
 function cancelEdit (idstr){
-    editing = editing.filter((value, index, arr) => {
-        return value != idstr
-    })
+    editing = editing.filter((value) =>  value != idstr
+    )
     
     for (let type of ["nevsign", "nevinput", "partsign", "partinput", "kepsign", "kepinput", "programsign", "programinput", "savebtn", "cancelbtn"]){
         const item = document.getElementById(type + idstr)
@@ -165,99 +178,104 @@ function drawJeloltek(kerInfo) {
         const ids = [currentKerulet, jelolt.id]
         const idstr = ids[0] + "_" + ids[1]
         if(!(editing.includes(idstr))){
-            const jeloltDiv = document.createElement("div")
-            jeloltDiv.classList.add("jeloltDiv")
-            jeloltDiv.id = "jeloltDiv" + idstr
-
-            const nev = document.createElement("h4")
-            nev.innerHTML = jelolt.nev
-            nev.id = "jeloltNev" + idstr
-            const nevinput = document.createElement("input")
-            nevinput.id = "nevinput" + idstr
-            nevinput.defaultValue = jelolt.nev
-            const nevsign = document.createElement("span")
-            nevsign.id = "nevsign" + idstr
-            nevsign.innerHTML = "Név: "
-            jeloltDiv.appendChild(nev)
-            jeloltDiv.appendChild(nevsign)
-            jeloltDiv.appendChild(nevinput)
-            
-            const part = document.createElement("h5")
-            part.innerHTML = jelolt.part
-            part.id = "part" + idstr
-            const partinput = document.createElement("input")
-            partinput.id = "partinput" + idstr
-            partinput.defaultValue = jelolt.part
-            const partsign = document.createElement("span")
-            partsign.id = "partsign" + idstr
-            partsign.innerHTML = "Párt: "
-            jeloltDiv.appendChild(part)
-            jeloltDiv.appendChild(partsign)
-            jeloltDiv.appendChild(partinput)
-
-            
-            const kep = document.createElement("img")
-            kep.src = "../images/jeloltek/" + jelolt.kep
-            kep.id = "kep" + idstr
-            const kepinput = document.createElement("input")
-            kepinput.id = "kepinput" + idstr
-            kepinput.defaultValue = jelolt.kep
-            const kepsign = document.createElement("span")
-            kepsign.id = "kepsign" + idstr
-            kepsign.innerHTML = "Kép fájlneve: "
-            jeloltDiv.appendChild(kep)
-            jeloltDiv.appendChild(kepsign)
-            jeloltDiv.appendChild(kepinput)
-        
-            const program = document.createElement("a")
-            program.innerHTML = jelolt.program
-            program.href = jelolt.program
-            program.id = "program" + idstr
-            program.target = "_blank"
-            const programinput = document.createElement("input")
-            programinput.id = "programinput" + idstr
-            programinput.defaultValue = jelolt.program
-            programinput.size = 50
-            const programsign = document.createElement("span")
-            programsign.id = "programsign" + idstr
-            programsign.innerHTML = "Program: "    
-            jeloltDiv.appendChild(program)
-            jeloltDiv.appendChild(programsign)
-            jeloltDiv.appendChild(programinput)
-            
-            const editbtn = document.createElement("button")
-            editbtn.innerHTML = "Jelölt szerkesztése"
-            editbtn.id = "editbtn" + idstr
-            editbtn.addEventListener("click", () => {editJelolt(ids)})
-            jeloltDiv.appendChild(editbtn)
-            
-            const deletebtn = document.createElement("button")
-            deletebtn.innerHTML = "Jelölt törlése"
-            deletebtn.id = "deletebtn" + idstr
-            deletebtn.addEventListener("click", () => {removeJelolt(ids)})
-            jeloltDiv.appendChild(deletebtn)
-
-            const savebtn = document.createElement("button")
-            savebtn.innerHTML = "Mentés"
-            savebtn.id = "savebtn" + idstr
-            savebtn.addEventListener("click", () => {saveEdit(ids)})
-            jeloltDiv.appendChild(savebtn)
-
-            const cancelbtn = document.createElement("button")
-            cancelbtn.innerHTML = "Mégse"
-            cancelbtn.id = "cancelbtn" + idstr
-            cancelbtn.addEventListener("click", () => {cancelEdit(idstr)})
-            jeloltDiv.appendChild(cancelbtn)
-            
-            for (let item of [nevsign, nevinput, partsign, partinput, kepsign, kepinput, programsign, programinput, savebtn, cancelbtn]){
-                item.classList.add("hidden")
-            }
-            
-            kerInfo.appendChild(jeloltDiv)
+            drawJelolt(jelolt, ids, kerInfo)
         
         }
     }
     insertAfter(kerInfo, document.getElementById("keruletNev" + currentKerulet))
+}
+
+function drawJelolt(jelolt, ids, kerInfo) {
+    const idstr = ids[0] + "_" + ids[1]
+    const jeloltDiv = document.createElement("div")
+    jeloltDiv.classList.add("jeloltDiv")
+    jeloltDiv.id = "jeloltDiv" + idstr
+
+    const nev = document.createElement("h4")
+    nev.innerHTML = jelolt.nev
+    nev.id = "jeloltNev" + idstr
+    const nevinput = document.createElement("input")
+    nevinput.id = "nevinput" + idstr
+    nevinput.defaultValue = jelolt.nev
+    const nevsign = document.createElement("span")
+    nevsign.id = "nevsign" + idstr
+    nevsign.innerHTML = "Név: "
+    jeloltDiv.appendChild(nev)
+    jeloltDiv.appendChild(nevsign)
+    jeloltDiv.appendChild(nevinput)
+
+    const part = document.createElement("h5")
+    part.innerHTML = jelolt.part
+    part.id = "part" + idstr
+    const partinput = document.createElement("input")
+    partinput.id = "partinput" + idstr
+    partinput.defaultValue = jelolt.part
+    const partsign = document.createElement("span")
+    partsign.id = "partsign" + idstr
+    partsign.innerHTML = "Párt: "
+    jeloltDiv.appendChild(part)
+    jeloltDiv.appendChild(partsign)
+    jeloltDiv.appendChild(partinput)
+
+
+    const kep = document.createElement("img")
+    kep.src = "../images/jeloltek/" + jelolt.kep
+    kep.id = "kep" + idstr
+    const kepinput = document.createElement("input")
+    kepinput.id = "kepinput" + idstr
+    kepinput.defaultValue = jelolt.kep
+    const kepsign = document.createElement("span")
+    kepsign.id = "kepsign" + idstr
+    kepsign.innerHTML = "Kép fájlneve: "
+    jeloltDiv.appendChild(kep)
+    jeloltDiv.appendChild(kepsign)
+    jeloltDiv.appendChild(kepinput)
+
+    const program = document.createElement("a")
+    program.innerHTML = jelolt.program
+    program.href = jelolt.program
+    program.id = "program" + idstr
+    program.target = "_blank"
+    const programinput = document.createElement("input")
+    programinput.id = "programinput" + idstr
+    programinput.defaultValue = jelolt.program
+    programinput.size = 50
+    const programsign = document.createElement("span")
+    programsign.id = "programsign" + idstr
+    programsign.innerHTML = "Program: "
+    jeloltDiv.appendChild(program)
+    jeloltDiv.appendChild(programsign)
+    jeloltDiv.appendChild(programinput)
+
+    const editbtn = document.createElement("button")
+    editbtn.innerHTML = "Jelölt szerkesztése"
+    editbtn.id = "editbtn" + idstr
+    editbtn.addEventListener("click", () => { editJelolt(ids) })
+    jeloltDiv.appendChild(editbtn)
+
+    const deletebtn = document.createElement("button")
+    deletebtn.innerHTML = "Jelölt törlése"
+    deletebtn.id = "deletebtn" + idstr
+    deletebtn.addEventListener("click", () => { removeJelolt(ids) })
+    jeloltDiv.appendChild(deletebtn)
+
+    const savebtn = document.createElement("button")
+    savebtn.innerHTML = "Mentés"
+    savebtn.id = "savebtn" + idstr
+    savebtn.addEventListener("click", () => { saveEdit(ids) })
+    jeloltDiv.appendChild(savebtn)
+
+    const cancelbtn = document.createElement("button")
+    cancelbtn.innerHTML = "Mégse"
+    cancelbtn.id = "cancelbtn" + idstr
+    cancelbtn.addEventListener("click", () => { cancelEdit(idstr) })
+    jeloltDiv.appendChild(cancelbtn)
+
+    for (let item of [nevsign, nevinput, partsign, partinput, kepsign, kepinput, programsign, programinput, savebtn, cancelbtn]) {
+        item.classList.add("hidden")
+    }
+
+    kerInfo.appendChild(jeloltDiv)
 }
 
 function insertAfter(newNode, existingNode) {
