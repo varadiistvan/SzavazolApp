@@ -25,8 +25,11 @@ img {
 
 input{
     margin : 2vmin;
+    display: block;
 }
 
-br{
+a{
     margin : 1vmin;
+    display: block;
 }
+
