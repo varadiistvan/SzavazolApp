@@ -2,3 +2,31 @@ img {
     width : 20vmin;
     object-fit : contain
 }
+
+.kerdiv{
+    border : black 2px solid;
+    margin : 5vmin;
+    padding : 2vmin;
+}
+
+#eddigiKeruletek{
+    width: 50%
+}
+
+.jeloltDiv{
+    border : black 1px solid;
+    margin : 2vmin;
+    padding : 2vmin;
+}
+
+.hidden{
+    display: none;
+}
+
+input{
+    margin : 2vmin;
+}
+
+br{
+    margin : 1vmin;
+}

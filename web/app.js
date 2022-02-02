@@ -15,12 +15,14 @@ for(let str of ["valaszto", "orszagos", "compass", "kviz", "info"]){
 
 app.get("/data/valaszto", (req, res) => {
     let milos = {
+        id:"ricardo",
         nev:"Ricardo Milos",
         part:"Megduglak KFT",
         kep:"milos0.jpg",
         program:"https://youtu.be/IxWo7yG-W-E"
     }
     let pepe = {
+        id:"pepe",
         nev:"Pepe the frog",
         part:"Memeland",
         kep:"pepe0.webp",
@@ -32,8 +34,8 @@ app.get("/data/valaszto", (req, res) => {
         jeloltek: jeloltek
     }
     let keruletek = {
-        0:elso,
-        1:{keruletNev:"Második kerület", jeloltek: []}
+        1:{keruletNev:"Második kerület", jeloltek: []},
+        0:elso
     }
     res.send(JSON.stringify(keruletek))
 })
